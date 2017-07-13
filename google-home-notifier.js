@@ -29,6 +29,29 @@ var notify = function(message, callback) {
   }
 }
 
+var play = function(mp3_url, callback) {
+
+console.log("play mp3_url : " + mp3_url); 
+
+  if (!deviceAddress){
+    browser.start();
+    browser.on('serviceUp', function(service) {
+      console.log('Device "%s" at %s:%d', service.name, service.addresses[0], service.port);
+      if (service.name.includes(device.replace(' ', '-'))){
+        deviceAddress = service.addresses[0];
+    	onDeviceUp(deviceAddress, mp3_url, function(res){
+      	callback(res)
+    	});
+      }
+      browser.stop();
+    });
+  }else {
+    onDeviceUp(deviceAddress, mp3_url, function(res){
+      callback(res)
+    });
+  }
+}
+
 var getSpeechUrl = function(text, host, callback) {
   googletts(text, 'en', 1).then(function (url) {
     onDeviceUp(host, url, function(res){
@@ -40,6 +63,11 @@ var getSpeechUrl = function(text, host, callback) {
 }
 
 var onDeviceUp = function(host, url, callback) {
+
+console.log("onDeviceUp");
+console.log("host",host);
+console.log("url",url);
+
   var client = new Client();
   client.connect(host, function() {
     client.launch(DefaultMediaReceiver, function(err, player) {
@@ -64,3 +92,4 @@ var onDeviceUp = function(host, url, callback) {
 
 exports.device = device;
 exports.notify = notify;
+exports.play = play;
