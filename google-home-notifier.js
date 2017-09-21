@@ -9,21 +9,21 @@ var device = function(name) {
     return this;
 }
 
-var notify = function(message, callback) {
+var notify = function(message, lang, callback) {
   if (!deviceAddress){
     browser.start();
     browser.on('serviceUp', function(service) {
       console.log('Device "%s" at %s:%d', service.name, service.addresses[0], service.port);
       if (service.name.includes(device.replace(' ', '-'))){
         deviceAddress = service.addresses[0];
-        getSpeechUrl(message, deviceAddress, function(res) {
+        getSpeechUrl(message, lang, deviceAddress, function(res) {
           callback(res);
         });
       }
       browser.stop();
     });
   }else {
-    getSpeechUrl(message, deviceAddress, function(res) {
+    getSpeechUrl(message, lang, deviceAddress, function(res) {
       callback(res);
     });
   }
@@ -52,8 +52,8 @@ console.log("play mp3_url : " + mp3_url);
   }
 }
 
-var getSpeechUrl = function(text, host, callback) {
-  googletts(text, 'en', 1).then(function (url) {
+var getSpeechUrl = function(text, lang, host, callback) {
+  googletts(text, lang, 1).then(function (url) {
     onDeviceUp(host, url, function(res){
       callback(res)
     });
