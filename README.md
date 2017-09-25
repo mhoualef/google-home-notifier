@@ -36,6 +36,10 @@ Use the latest nodejs dist.
 ```sh
 curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
 sudo apt-get install nodejs
+
+++
+
+sudo apt-get install nodejs-legacy
 ```
 Also install these packages:
 ```sh
