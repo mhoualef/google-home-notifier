@@ -39,7 +39,20 @@ sudo apt-get install nodejs
 
 ++
 
-sudo apt-get install nodejs-legacy
+install last node js version
+
+wget https://nodejs.org/dist/v6.2.1/node-v6.2.1-linux-armv6l.tar.gz
+sudo mv node-v6.2.1-linux-armv6l.tar.gz /opt
+cd opt
+cd /opt/
+sudo tar -xzf node-v6.2.1-linux-armv6l.tar.gz 
+mv node-v6.2.1-linux-armv6l nodejs
+sudo mv node-v6.2.1-linux-armv6l nodejs
+sudo rm node-v6.2.1-linux-armv6l.tar.gz 
+sudo ln -s /opt/nodejs/bin/node /usr/bin/node
+sudo ln -s /opt/nodejs/bin/npm /usr/bin/npm
+node -v
+
 ```
 Also install these packages:
 ```sh
